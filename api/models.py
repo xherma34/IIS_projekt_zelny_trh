@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
 from datetime import date
 
 # Create your models here.
@@ -61,9 +61,9 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True,)
     lastName = models.CharField(max_length=30)
     firstName = models.CharField(max_length=30)
-    phone = models.CharField(max_length=16, unique=True, null=True)
+    phone = models.CharField(validators=[MinLengthValidator(11)], max_length=16, unique=True, null=True)
     dateOfBirth = models.DateField(null=True)
-    bankAccount = models.CharField(max_length=18,null=True)
+    bankAccount = models.CharField(validators=[MinLengthValidator(9)], max_length=18,null=True)
 
 
     # def save( self, *args, **kw ):
