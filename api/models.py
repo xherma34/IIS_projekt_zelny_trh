@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import date
 
 # Create your models here.
 
@@ -58,11 +59,11 @@ class User(AbstractBaseUser):
     #username = models.CharField(max_length=255)
     #full_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True,)
-    lastName = models.CharField(max_length=100)
-    firstName = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100, unique=True, null=True)
+    lastName = models.CharField(max_length=30)
+    firstName = models.CharField(max_length=30)
+    phone = models.CharField(max_length=16, unique=True, null=True)
     dateOfBirth = models.DateField(null=True)
-    bankAccount = models.CharField(max_length=100,null=True)
+    bankAccount = models.CharField(max_length=18,null=True)
 
 
     # def save( self, *args, **kw ):
@@ -163,7 +164,7 @@ class User(AbstractBaseUser):
 
 
 class CropCatalog(models.Model):
-    cropType = models.CharField(max_length=100, primary_key=True)
+    cropType = models.CharField(max_length=50, primary_key=True)
 
     Vegetable = 'Zelenina'
     Fruit = 'Ovoce'
@@ -172,7 +173,7 @@ class CropCatalog(models.Model):
         (Vegetable, Vegetable),
         (Fruit, Fruit)
     )
-    category = models.CharField(max_length=100,choices=Category, default=Vegetable)
+    category = models.CharField(max_length=50,choices=Category, default=Vegetable)
     #image = models.ImageField(upload_to='../img/uploads', null=True)
 
 
@@ -185,7 +186,7 @@ class Crop(models.Model):
     type = models.ForeignKey(CropCatalog, on_delete=models.CASCADE, null=True, related_name='cropsByType')
     farmer = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='cropsByFarmer')
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
     amount = models.IntegerField()
 
     Kg = 'Kg'
@@ -196,8 +197,8 @@ class Crop(models.Model):
         (Kus, Kus)
     )
     units = models.CharField(max_length=3,choices=Measure, default=Kg)
-    price = models.IntegerField()
-    placeOfOrigin = models.CharField(max_length=100)
+    price = models.IntegerField(validators=[MinValueValidator(0)])
+    placeOfOrigin = models.CharField(max_length=80)
     rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
     #image = models.ImageField(upload_to='../img/uploads', null=True)
 
@@ -213,12 +214,12 @@ class Harvest(models.Model):
     crop = models.ForeignKey(CropCatalog, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=60)
+    address = models.CharField(max_length=50)
     date = models.DateField(null=False, blank=False)
     timeFrom = models.TimeField()
     timeTo = models.TimeField()
-    price = models.IntegerField()
+    price = models.IntegerField(validators=[MinValueValidator(0)])
 
     Kg = 'Kg'
     Kus = 'Kus'
@@ -249,9 +250,9 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
 
     date = models.DateField(null=False, blank=False)
-    city = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    postAddress = models.CharField(max_length=100)
+    city = models.CharField(max_length=60)
+    address = models.CharField(max_length=50)
+    postAddress = models.CharField(max_length=10)
 
     def __str__(self):
         return "%s %d" % (self.user, self.id)
@@ -261,8 +262,8 @@ class OrderDetail(models.Model):
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
-    amount = models.IntegerField()
-    rating = models.IntegerField()
+    amount = models.IntegerField(validators=[MinValueValidator(0)])
+    rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
 
     def __str__(self):
             return "%s %s" % (self.order, self.crop)
@@ -280,7 +281,7 @@ class Suggestion(models.Model):
         (Vegetable, Vegetable),
         (Fruit, Fruit)
     )
-    category = models.CharField(max_length=100,choices=Category, default=Vegetable)
+    category = models.CharField(max_length=30,choices=Category, default=Vegetable)
     #TODO image =
 
     def __str__(self):
