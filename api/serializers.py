@@ -1,11 +1,10 @@
 from rest_framework import serializers
 from .models import *
 
-
 class UserBasicSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['full_name', 'email']
+        fields = ['full_name', 'email', 'id']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,6 +15,15 @@ class CropSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crop
         fields = '__all__'
+
+
+class GetAllCropSerializer(serializers.ModelSerializer):
+    
+    farmer = UserBasicSerializer()
+    class Meta:
+        model = Crop
+        fields = '__all__'
+
 
 class CropCatalogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,3 +50,44 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         model = OrderDetail
         fields = '__all__'
 
+class FarmerOfHarvestSerializer(serializers.ModelSerializer):
+
+    farmer = UserBasicSerializer()
+    class Meta:
+        model = Harvest
+        fields='__all__'
+
+class HarvestDataSerializer(serializers.ModelSerializer):
+
+    harvest = FarmerOfHarvestSerializer()
+    class Meta:
+        model = HarvestUsers
+        fields = '__all__'
+
+# class CropOrderDetailSerializer(serializers.ModelSerializer):
+#     farmer = UserBasicSerializer()
+#     class Meta:
+#         model = Crop
+#         fields = '__all__'
+
+
+class CropOrderDetailSerializer(serializers.ModelSerializer):
+    farmer = UserBasicSerializer()
+    class Meta:
+        model = Crop
+        fields = '__all__'
+
+
+class TestOrderSerializer(serializers.ModelSerializer):
+
+    order = OrderSerializer()
+    crop = CropOrderDetailSerializer(many=False)
+    class Meta:
+        model = OrderDetail
+        fields = '__all__'
+
+class SuggestionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Suggestion
+        fields = '__all__'

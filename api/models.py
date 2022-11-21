@@ -51,7 +51,10 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     #username = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True,)
+    email = models.EmailField(max_length=255, unique=True)
+    
+    #image = models.ImageField(upload_to='../img/uploads', null=True)
+
     #profile_picture = models.ImageField(null=True, default="avatar.svg")
     active = models.BooleanField(default=True)
     farmer = models.BooleanField(default=False)  # a admin user; non super-user
@@ -154,7 +157,7 @@ class CropCatalog(models.Model):
         (Fruit, Fruit)
     )
     category = models.CharField(max_length=100,choices=Category, default=Vegetable)
-    #image = models.ImageField(default='TODO.jpg', upload_to='profile_pics')
+    image = models.ImageField(upload_to='../img/uploads', null=True)
 
 
     def __str__(self):
@@ -180,7 +183,7 @@ class Crop(models.Model):
     price = models.IntegerField()
     placeOfOrigin = models.CharField(max_length=100)
     rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
-    #image = models.ImageField(default='TODO.jpg', upload_to='profile_pics')
+    image = models.ImageField(upload_to='../img/uploads', null=True)
 
     def __str__(self):
         return "%s - prodává: %s" % (self.name, self.farmer)
@@ -247,3 +250,23 @@ class OrderDetail(models.Model):
 
     def __str__(self):
             return "%s %s" % (self.order, self.crop)
+
+
+class Suggestion(models.Model):
+
+    cropType = models.CharField(max_length=50, blank=True)
+    
+    name = models.CharField(max_length=50, blank=True)
+
+
+    Vegetable = 'Zelenina'
+    Fruit = 'Ovoce'
+    Category = (
+        (Vegetable, Vegetable),
+        (Fruit, Fruit)
+    )
+    category = models.CharField(max_length=100,choices=Category, default=Vegetable)
+    #TODO image =
+
+    def __str__(self):
+            return self.croptype

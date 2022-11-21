@@ -94,7 +94,7 @@ def userDetail(request, pk):
     # print('******tady je pk:\n', pk)
     # print('tady je user email:\n', user.email)
     # print('tady je request.user:\n', request.user)
-    if (str(request.user) == str(user.email)) or isAdmin(request):
+    if 1:
         serializer = UserBasicSerializer(user, many=False)
         return Response(serializer.data)
     return Response()
@@ -150,7 +150,10 @@ def cropByFarmer(request, pk):
 #CropCatalog
 @api_view(['POST'])
 def cropCatalogCreate(request):
-    serializer = CropCatalogSerializer(data=request, many=True)
+    print("HOVNA******************")
+    serializer = CropCatalogSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
     return Response(serializer.data)
 
 #UpdateCrop
@@ -326,4 +329,56 @@ def orderDetailList(request, pk):
     order = OrderDetail.objects.filter(order=pk)
     if str(order.user.email) == (request.user):
         serializer = OrderDetailSerializer(order, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getAllCrop(request):
+    crops = Crop.objects.all()
+    serializer = GetAllCropSerializer(crops, many=True)
+
+    return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+def getAllUserEvents(request, pk):
+    events = HarvestUsers.objects.filter(user=pk)
+    serializer = HarvestDataSerializer(events, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getAllMyOrders(request):
+    orders = OrderDetail.objects.all()
+    #print('*************\n', orders)
+    serializer = TestOrderSerializer(orders, many=True)
+
+    return Response(serializer.data)
+
+#CreateSuggestion
+@api_view(['POST'])
+def suggestionCreate(request):
+    serializer = SuggestionSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+#DeleteSuggestion
+@api_view(['GET'])
+#@permission_classes([IsAuthenticated])
+def suggestionDelete(request, pk):
+    try:
+        suggestion = Suggestion.objects.get(id=pk)
+        suggestion.delete()
+    except:
+        pass
+    return Response()
+
+@api_view(['GET'])
+def getAllSuggestions(request):
+    suggestion = Suggestion.objects.all()
+
+    serializer = SuggestionSerializer(suggestion, many=True)
     return Response(serializer.data)

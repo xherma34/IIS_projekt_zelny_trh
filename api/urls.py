@@ -35,22 +35,31 @@ urlpatterns = [
     path('cropList/', cropList),
     path('cropByType/<str:type>', cropByType),
     path('cropByFarmer/<str:pk>', cropByFarmer),
+    path('getAllCrop/', getAllCrop),
     
 
     #Catalog
     path('cropCatalogList/', cropCatalogList),
     path('cropCatalogByCategory/<str:type>', cropCatalogByCategory),
+    path('cropCatalogCreate/', cropCatalogCreate),
 
     #Harvest
     path('harvestList/', harvestList),
     path('harvestDelete/<str:pk>', harvestDelete),
     path('harvestUserList/<str:pk>', harvestUserList),
     path('harvestByFarmer/<str:name>', harvestByFarmer),
+    path('getAllUserEvents/<str:pk>', getAllUserEvents),
 
     #Order
     #path('orderList/', orderList),
     path('orderDetailList/<str:pk>', orderDetailList),
     path('farmerOrders/<str:pk>', farmerOrders),
     #path('orderDisplay/<str:pk>', orderDisplay),
+    path('getAllMyOrders', getAllMyOrders),
     
+
+    #Suggestion
+    path('getAllSuggestions/', getAllSuggestions),
+    path('suggestionCreate/', suggestionCreate),
+    path('suggestionDelete/<str:pk>', suggestionDelete),
 ]

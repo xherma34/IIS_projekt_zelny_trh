@@ -1,0 +1,29 @@
+.content{
+    margin: 150px 150px 150px 150px;
+}
+
+.picUIP img{
+    height: 250px;
+    width: 250px;
+    border-radius: 100%;
+}
+
+.leftUIP input{
+    color: black;
+}
+
+.leftColUIP{
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonsColUIP{
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonsColUIP button{
+    width: 250px;
+}
+
+
