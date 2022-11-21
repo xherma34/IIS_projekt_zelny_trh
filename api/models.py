@@ -6,18 +6,21 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, full_name, password=None, is_admin=False, is_staff=False, is_farmer=False, is_active=True):
+    def create_user(self, email, firstName, lastName, password=None, is_admin=False, is_staff=False, is_farmer=False, is_active=True):
         if not email:
             raise ValueError("User must have an email")
         if not password:
             raise ValueError("User must have a password")
-        if not full_name:
-            raise ValueError("User must have a full name")
+        if not firstName:
+            raise ValueError("User must have a firstName")
+        if not lastName:
+            raise ValueError("User must have a lirstName")
 
         user = self.model(
             email=self.normalize_email(email)
         )
-        user.full_name = full_name
+        user.firstName = firstName
+        user.lastName = lastName
         user.set_password(password)  # change password to hash
         #
         user.admin = is_admin
@@ -27,18 +30,21 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
         
-    def create_superuser(self, email, full_name, password=None, **extra_fields):
+    def create_superuser(self, email, firstName, lastName, password=None, **extra_fields):
         if not email:
             raise ValueError("User must have an email")
         if not password:
             raise ValueError("User must have a password")
-        if not full_name:
-            raise ValueError("User must have a full name")
+        if not firstName:
+            raise ValueError("User must have a firstName")
+        if not lastName:
+            raise ValueError("User must have a lirstName")
 
         user = self.model(
             email=self.normalize_email(email)
         )
-        user.full_name = full_name
+        user.firstName = firstName
+        user.lastName = lastName
         user.set_password(password)
         #user.profile_picture = profile_picture
         user.admin = True
@@ -50,9 +56,19 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     #username = models.CharField(max_length=255)
-    full_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True)
-    
+    #full_name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True,)
+    lastName = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100, unique=True, null=True)
+    dateOfBirth = models.DateField(null=True)
+    bankAccount = models.CharField(max_length=100,null=True)
+
+
+    # def save( self, *args, **kw ):
+    #         self.full_name = '{0} {1}'.format( firstName, lastName )
+    #         super( User, self ).save( *args, **kw )
+
     #image = models.ImageField(upload_to='../img/uploads', null=True)
 
     #profile_picture = models.ImageField(null=True, default="avatar.svg")
@@ -63,7 +79,7 @@ class User(AbstractBaseUser):
     # notice the absence of a "Password field", that's built in.
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['full_name']  # Email & Password are required by default.
+    REQUIRED_FIELDS = ['firstName', 'lastName']  # Email & Password are required by default.
 
     objects = UserManager()
 
@@ -157,7 +173,7 @@ class CropCatalog(models.Model):
         (Fruit, Fruit)
     )
     category = models.CharField(max_length=100,choices=Category, default=Vegetable)
-    image = models.ImageField(upload_to='../img/uploads', null=True)
+    #image = models.ImageField(upload_to='../img/uploads', null=True)
 
 
     def __str__(self):
@@ -183,7 +199,7 @@ class Crop(models.Model):
     price = models.IntegerField()
     placeOfOrigin = models.CharField(max_length=100)
     rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
-    image = models.ImageField(upload_to='../img/uploads', null=True)
+    #image = models.ImageField(upload_to='../img/uploads', null=True)
 
     def __str__(self):
         return "%s - prodává: %s" % (self.name, self.farmer)
@@ -225,8 +241,8 @@ class HarvestUsers(models.Model):
     class Meta:
         unique_together = ('harvest','user')
 
-    def __int__(self):
-        return self.id
+    def __str__(self):
+        return "%s se účastní: %s" % (self.user, self.harvest)
 
 class Order(models.Model):
     #ForeignKeys
@@ -251,7 +267,6 @@ class OrderDetail(models.Model):
     def __str__(self):
             return "%s %s" % (self.order, self.crop)
 
-
 class Suggestion(models.Model):
 
     cropType = models.CharField(max_length=50, blank=True)
@@ -269,4 +284,4 @@ class Suggestion(models.Model):
     #TODO image =
 
     def __str__(self):
-            return self.croptype
+            return self.cropType

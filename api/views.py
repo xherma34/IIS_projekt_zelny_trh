@@ -17,7 +17,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token['full_name'] = user.full_name
+        token['email'] = user.email
 
         return token
 
@@ -58,6 +58,7 @@ def userCreate(request):
         instance = serializer.save()
         instance.set_password(instance.password)
         instance.save()
+        #serializer.save()
     return Response(serializer.data)
 
 #UpdateUser
@@ -147,10 +148,9 @@ def cropByFarmer(request, pk):
     serializer = CropSerializer(crops, many=True)
     return Response(serializer.data)
 
-#CropCatalog
+#######################CropCatalog########################################
 @api_view(['POST'])
 def cropCatalogCreate(request):
-    print("HOVNA******************")
     serializer = CropCatalogSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -306,13 +306,13 @@ def farmerOrders(request, pk):
     #print('\n***************\n', cropType.cropsByType.all(), '\n***************\n')
     
 
-# #OrderList
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def orderList(request):
-#     order = Order.objects.all()
-#     serializer = OrderSerializer(order, many=True)
-#     return Response(serializer.data)
+#OrderList
+@api_view(['GET'])
+#@permission_classes([IsAuthenticated])
+def orderList(request):
+    order = Order.objects.all()
+    serializer = OrderSerializer(order, many=True)
+    return Response(serializer.data)
 
 # #OrderDisplay
 # @api_view(['GET'])
@@ -324,12 +324,18 @@ def farmerOrders(request, pk):
 
 #OrderDetailList
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def orderDetailList(request, pk):
     order = OrderDetail.objects.filter(order=pk)
-    if str(order.user.email) == (request.user):
-        serializer = OrderDetailSerializer(order, many=True)
+    #if str(order.user.email) == (request.user):
+    serializer = OrderDetailSerializer(order, many=True)
     return Response(serializer.data)
+
+
+
+
+
+
 
 
 @api_view(['GET'])
@@ -339,6 +345,13 @@ def getAllCrop(request):
 
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def getAllHarvests(request):
+    harvests = Harvest.objects.all()
+    serializer = HarvestSerializer(harvests, many=True)
+
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -350,12 +363,22 @@ def getAllUserEvents(request, pk):
 
 
 @api_view(['GET'])
-def getAllMyOrders(request):
-    orders = OrderDetail.objects.all()
-    #print('*************\n', orders)
-    serializer = TestOrderSerializer(orders, many=True)
+def getAllMyOrders(request,pk):
 
+    orderDetail = OrderDetail.objects.all()
+
+    serializer = OrderWholeSerializer(orderDetail, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getAllUserOffers(request,pk):
+
+    crops = Crop.objects.filter(farmer=pk)
+
+    serializer = CropSerializer(crops, many=True)
+    return Response(serializer.data)
+
+
 
 #CreateSuggestion
 @api_view(['POST'])

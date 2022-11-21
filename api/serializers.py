@@ -1,10 +1,15 @@
 from rest_framework import serializers
 from .models import *
 
+
+
+
+
+
 class UserBasicSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['full_name', 'email', 'id']
+        fields = ['firstName','lastName', 'email', 'id']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,6 +36,7 @@ class CropCatalogSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class HarvestSerializer(serializers.ModelSerializer):
+    farmer = UserBasicSerializer()
     class Meta:
         model = Harvest
         fields = '__all__'
@@ -79,6 +85,15 @@ class CropOrderDetailSerializer(serializers.ModelSerializer):
 
 
 class TestOrderSerializer(serializers.ModelSerializer):
+
+    order = OrderSerializer()
+    crop = CropOrderDetailSerializer(many=False)
+    class Meta:
+        model = OrderDetail
+        fields = '__all__'
+
+
+class OrderWholeSerializer(serializers.ModelSerializer):
 
     order = OrderSerializer()
     crop = CropOrderDetailSerializer(many=False)
