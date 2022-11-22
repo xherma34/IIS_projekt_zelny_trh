@@ -2,14 +2,16 @@ import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import useAxios from '../utils/useAxios'
 import './AdminPage.css'
-import "./AdminPage.css"
 import {Link} from 'react-router-dom'
 
 const AdminPage = () => {
 
 	let[users, setUsers] = useState([])
 
+	let ran = 0
+
 	useEffect(() => {
+		
 		getUsers()
 		
 	}, [])
@@ -40,8 +42,11 @@ const AdminPage = () => {
 							<img src={require('../img/farmer_01.jpg')} alt="farmerPic" />
 						</div>
 						<div>
-							<p className='mailAP'>{users.full_name}</p>
-							<p className='nameAP'>{users.email}</p>
+							<div className="myTextRow">
+								<p className='nameAP'>{users.firstName}</p>
+								<p className='nameAP'>{users.lastName}</p>
+							</div>
+							<p className='mailAP'>{users.email}</p>
 						</div>
 						<div>
 							{users.image}
@@ -50,10 +55,8 @@ const AdminPage = () => {
 					<div className='secondColAP'>
 						<div className='buttonAP'>
 							<img src={require('../img/farmer_01.jpg')} alt="farmerPic" />
-							<Link to='/changeuserinfo'>
-								<button
-								onClick={() => {console.log(users.email)}}
-								>Upravit</button>
+							<Link to={'/changeuser/'+users.id}>
+								<button>Upravit</button>
 							</Link>
 						</div>
 						<div className='buttonAP'>

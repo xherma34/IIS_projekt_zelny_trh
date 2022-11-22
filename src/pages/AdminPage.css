@@ -18,13 +18,13 @@
     gap: 85px;
 }
 
-.mailAP{
+.nameAP{
     font-size: 25px;
     margin: 0;
     color: red;
 }
 
-.nameAP{
+.mailAP{
     font-size: 15px;
     color: grey;
     margin: 0;
@@ -55,4 +55,10 @@
 .buttonAP img{
     height: 25px;
     width: 25px;
+}
+
+.myTextRow{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
 }

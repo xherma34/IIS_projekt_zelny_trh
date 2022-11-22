@@ -7,23 +7,23 @@ const LoginPage = () => {
 	let {loginUser} = useContext(AuthContext)
   	return (
 	<div>
-		<div class="header">
-			<div class="header-left">
+		<div className="header">
+			<div className="header-left">
 				<img src="img/home.png" />
 			</div>
 
-			<div class="header-right">
+			<div className="header-right">
 				<img src="img/burger-menu.png" />
 			</div>
 		</div>
 
-		<div class="main">
-			<div class="container">
-				<div class="left">
+		<div className="main">
+			<div className="container">
+				<div className="left">
 					<form onSubmit={loginUser}>
-						<div class="container-left">
+						<div className="container-left">
 							<h1>Vítame Vás!</h1>
-							<div class="container-form">
+							<div className="container-form">
 								<label>Email:</label>
 								<input type="text" id="mail" name="email" placeholder="Your email:"/>
 								<label>Password:</label>
@@ -36,8 +36,8 @@ const LoginPage = () => {
 					</form>
 				</div>
 
-				<div class="right">
-					<div class="container-right">
+				<div className="right">
+					<div className="container-right">
 						<h1>Zelný Trh</h1>
 						<hr/>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -48,7 +48,7 @@ const LoginPage = () => {
 						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 						<h2>Pokračovat bez registrace</h2>
 
-						<div class="continue-img">
+						<div className="continue-img">
 							<img src="img/continue.png" alt="continue.jpg" />
 						</div>
 					</div>
@@ -56,7 +56,7 @@ const LoginPage = () => {
 			</div>
 		</div>
 
-		<div class="footer">
+		<div className="footer">
 	
 		</div>
 	</div>

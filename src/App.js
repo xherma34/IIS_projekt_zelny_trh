@@ -13,6 +13,7 @@ import CropPage from './pages/CropPage'
 import AdminPage from './pages/AdminPage' //Added
 import UserInfo from './pages/UserInfoPage' //Added
 import SuggestionPage from './pages/SuggestionPage' //Added
+import AdminChangeUser from './pages/AdminChangeUser'; //Added
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -36,6 +37,7 @@ function App() {
           <Route component={AdminPage} path="/admin"/>
           <Route component={UserInfo} path="/userinfo"/>
           <Route component={SuggestionPage} path="/suggestion"/>
+          <Route component={AdminChangeUser} path="/changeuser/:id"/>
           <Footer/>
         </AuthProvider>
       </Routes>

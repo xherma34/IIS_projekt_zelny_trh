@@ -26,4 +26,7 @@
     width: 250px;
 }
 
+.colContentACU input::placeholder{
+    color:red;
+}
 

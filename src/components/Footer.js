@@ -15,7 +15,7 @@ const Footer = () => {
             )}
             <span> | </span>
             <Link to="/register" >Register</Link>
-            {user && <p>Hello {user.full_name}</p>}
+            {user && <p>Hello {user.email}</p>}
             <span> | </span>
             <Link to="/catalog" >Catalog</Link>
             <span> | </span>

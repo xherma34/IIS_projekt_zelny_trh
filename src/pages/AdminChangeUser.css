@@ -1,0 +1,65 @@
+.contentACU{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgACU{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgACU h2{
+    margin: 20px 0px 10px 0px;
+}
+
+.imgACU h3{
+    margin: 0px 0px 65px 0px;
+}
+
+.imgACU img{
+    width: 250px;
+    height:250px;
+    border-radius: 100%;
+}
+
+.colContentACU input::placeholder{
+    color:red;
+}
+
+.colContentACU{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25%;
+}
+
+.colContentACU div{
+    display: flex;
+    flex-direction: column;
+}
+
+.colContentACU div input{
+    margin: 5px 0px 45px 0px;
+    height: 35px;
+    text-align: left;
+    border: none;
+    border-bottom: solid black 2px;
+}
+
+.underColsACU{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.underColsACU input[type=submit]{
+    width: 150px;
+    height: 45px;
+    border: solid 3px red;
+    font-size: 18px;
+}
