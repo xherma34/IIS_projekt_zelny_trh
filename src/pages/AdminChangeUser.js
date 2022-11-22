@@ -30,7 +30,7 @@ const AdminChangeUser = ( {match} ) => {
 		setLastName(response.data.lastName)
 		setemail(response.data.email)
 		setphone(response.data.phone)
-		//setbankAcc(response.data.bankAccount)
+		setbankAcc(response.data.bankAccount)
 		setdateob(response.data.dateOfBirth)
 	}
 
@@ -72,17 +72,21 @@ const AdminChangeUser = ( {match} ) => {
 			},
 			body:JSON.stringify({"firstName":firstName, "lastName":lastName, "email":email, "dateOfBirth":dateob, "phone":phone})
 		})
+		console.log("tady je response",response.body)
 	}
+
+	//onSubmit={changeUser}
 
 	return (
 		<div className='contentACU'>
 			<div className='imgACU'>
 				<img src={require('../img/farmer_01.jpg')} alt="farmerPic" />
 				<h2>{user.firstName} {user.lastName}</h2>
+				{/* TODO dodelat status */}
 				<h3>status:</h3>
 			</div>
 			<div>
-				<form className="myFormACU" onSubmit={changeUser}>
+				<form className="myFormACU">
 					<div className="colContentACU">
 						<div className="leftColACU">
 							<label>Křestní jméno</label>
@@ -97,14 +101,16 @@ const AdminChangeUser = ( {match} ) => {
 							<input type="text" id="lastName" name="lastName" value={lastName} onChange={changeLName}/>
 							<label>Telefonní číslo</label>
 							<input type="text" id="phone" name="phone" value={phone} onChange={changePhone}/>
+							{/* TODO dodelat c. bankovniho uctu */}
 							<label>Č. bankovního účtu</label>
-							<input type="text" id="bankAcc" name="bankAcc" value="mrdka"/>
+							<input type="text" id="bankAcc" name="bankAcc" value={bankAcc} onChange={changeBAcc}/>
 						</div>
 					</div>
 					<div className="underColsACU">
-						<input type="submit"/>
+						<input type="submit" value="Potvrdit"/>
 					</div>
 					<div>
+						<p onClick={changeUser}>HOVNA</p>
 					</div>
 				</form>		
 			</div>

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import HttpResponse
 
 from .models import *
 from .serializers import *
@@ -62,7 +63,7 @@ def userCreate(request):
     return Response(serializer.data)
 
 #UpdateUser
-#TODO change
+#TODO changed
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated])
 def userUpdate(request, pk):
@@ -100,8 +101,7 @@ def userDetail(request, pk):
     # print('******tady je pk:\n', pk)
     # print('tady je user email:\n', user.email)
     # print('tady je request.user:\n', request.user)
-    # if request.user.id == pk or isAdmin(request):
-    if 1:
+    if request.user.id == pk or isAdmin(request):
         serializer = UserBasicSerializer(user, many=False)
         return Response(serializer.data)
     return Response()

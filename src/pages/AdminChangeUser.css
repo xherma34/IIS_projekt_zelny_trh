@@ -21,13 +21,17 @@
 }
 
 .imgACU img{
-    width: 250px;
-    height:250px;
+    width: 200px;
+    height:200px;
     border-radius: 100%;
 }
 
 .colContentACU input::placeholder{
     color:red;
+}
+
+.colContentACU div label{
+    color: #007200;
 }
 
 .colContentACU{
@@ -48,8 +52,10 @@
     height: 35px;
     text-align: left;
     border: none;
-    border-bottom: solid black 2px;
+    border-bottom: solid #38B000 2px;
+    color: black;
 }
+
 
 .underColsACU{
     width: 100%;
@@ -59,7 +65,10 @@
 
 .underColsACU input[type=submit]{
     width: 150px;
-    height: 45px;
-    border: solid 3px red;
+    height: 40px;
+    border: solid 2px #38B000;
     font-size: 18px;
+    color: white;
+    background-color: #38B000;
+    border-radius: 8px;
 }

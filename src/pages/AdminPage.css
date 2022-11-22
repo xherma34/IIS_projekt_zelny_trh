@@ -1,9 +1,14 @@
 .rowAP{
-    width: 95%;
+    width: 100%;
     height: auto;
     display: flex;
     gap: 15px;
     justify-content: space-between;
+    border-top: solid 1px grey;
+}
+
+.rowAP:last-child{
+    border-bottom: solid 1px grey;
 }
 
 .firstColAP{
@@ -11,15 +16,17 @@
     justify-content: center;
     align-items: center;
     gap: 25px;
+    margin-left: 20px;
 }
 
 .secondColAP{
     display: flex;
     gap: 85px;
+    margin-right: 80px;
 }
 
 .nameAP{
-    font-size: 25px;
+    font-size: 18px;
     margin: 0;
     color: red;
 }
@@ -37,7 +44,9 @@
     margin-left: 15px;
     align-self: center;
 }
-
+.firstColAP, .secondColAP{
+    padding: 5px 0px 5px 0px;
+}
 .buttonAP{
     display: flex;
     gap: 5px;
