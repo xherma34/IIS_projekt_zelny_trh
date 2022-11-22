@@ -9,7 +9,7 @@ from .models import *
 class UserBasicSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['firstName','lastName', 'email', 'id']
+        fields = ['firstName','lastName', 'email', 'id', 'dateOfBirth', 'phone']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

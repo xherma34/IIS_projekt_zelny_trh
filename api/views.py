@@ -62,11 +62,15 @@ def userCreate(request):
     return Response(serializer.data)
 
 #UpdateUser
+#TODO change
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def userUpdate(request, pk):
     user = User.objects.get(id=pk)
-    serializer = UserSerializer(instance=user, data=request.data ,many=False)
+    serializer = UserBasicSerializer(instance=user, data=request.data, many=False)
+    if serializer.is_valid():
+        serializer.save()
+        #serializer.save()
     return Response(serializer.data)
 
 #DeleteUser
@@ -87,14 +91,16 @@ def userList(request):
         serializer = UserBasicSerializer(users, many=True)
         return Response(serializer.data)
 
+#TODO changed
 #GetOneUser
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def userDetail(request, pk):
     user = User.objects.get(id=pk)
     # print('******tady je pk:\n', pk)
     # print('tady je user email:\n', user.email)
     # print('tady je request.user:\n', request.user)
+    # if request.user.id == pk or isAdmin(request):
     if 1:
         serializer = UserBasicSerializer(user, many=False)
         return Response(serializer.data)

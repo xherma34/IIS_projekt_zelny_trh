@@ -25,9 +25,10 @@ urlpatterns = [
 
     #User
     path('userList/', userList),
-    path('userDetail/<str:pk>', userDetail),
+    path('userDetail/<int:pk>', userDetail),
     path('userCreate/', userCreate),
-    path('userDelete/<str:pk>', userDelete),
+    path('userDelete/<int:pk>', userDelete),    #TODO changed
+    path('userUpdate/<int:pk>', userUpdate),    #TODO changed
 
     path('userOrderList/<str:pk>', userOrderList),
 

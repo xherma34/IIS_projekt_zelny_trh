@@ -63,7 +63,7 @@ class User(AbstractBaseUser):
     firstName = models.CharField(max_length=30)
     phone = models.CharField(validators=[MinLengthValidator(11)], max_length=16, unique=True, null=True)
     dateOfBirth = models.DateField(null=True)
-    bankAccount = models.CharField(validators=[MinLengthValidator(9)], max_length=18,null=True)
+    bankAccount = models.CharField(validators=[MinLengthValidator(9)], max_length=18, null=True)
 
 
     # def save( self, *args, **kw ):
