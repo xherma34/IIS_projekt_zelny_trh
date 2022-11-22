@@ -65,14 +65,22 @@ const AdminChangeUser = ( {match} ) => {
 	}
 
 	let changeUser = async() =>{
-		let response = await fetch('http://127.0.0.1:8000/api/userUpdate/'+match.params.id,{
-			method:'POST',
-			headers:{
+		let response = await api.post('/api/userUpdate/'+match.params.id, 
+		{
+			"firstName":firstName, "lastName":lastName, "email":email, "dateOfBirth":dateob, "phone":phone
+		}, 
+		{
+			headers: {
 				'Content-Type':'application/json',
-			},
-			body:JSON.stringify({"firstName":firstName, "lastName":lastName, "email":email, "dateOfBirth":dateob, "phone":phone})
+			}
 		})
-		console.log("tady je response",response.body)
+		// let response = await fetch('http://127.0.0.1:8000/api/userUpdate/'+match.params.id,{
+		// 	method:'POST',
+		// 	headers:{
+		// 		'Content-Type':'application/json',
+		// 	},
+		// 	body:JSON.stringify({"firstName":firstName, "lastName":lastName, "email":email, "dateOfBirth":dateob, "phone":phone})
+		// })
 	}
 
 	//onSubmit={changeUser}
@@ -86,7 +94,7 @@ const AdminChangeUser = ( {match} ) => {
 				<h3>status:</h3>
 			</div>
 			<div>
-				<form className="myFormACU">
+				<form className="myFormACU" onSubmit={changeUser}>
 					<div className="colContentACU">
 						<div className="leftColACU">
 							<label>Křestní jméno</label>
@@ -103,7 +111,7 @@ const AdminChangeUser = ( {match} ) => {
 							<input type="text" id="phone" name="phone" value={phone} onChange={changePhone}/>
 							{/* TODO dodelat c. bankovniho uctu */}
 							<label>Č. bankovního účtu</label>
-							<input type="text" id="bankAcc" name="bankAcc" value={bankAcc} onChange={changeBAcc}/>
+							<input type="text" id="bankAcc" name="bankAcc" value="MRDKA"/>
 						</div>
 					</div>
 					<div className="underColsACU">
